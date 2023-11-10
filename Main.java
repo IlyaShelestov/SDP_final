@@ -1,5 +1,17 @@
 package FinalProject;
 
+import FinalProject.Adapter.DollarsCurrency;
+import FinalProject.Adapter.TengeCurrencyAdapter;
+import FinalProject.Decorator.*;
+import FinalProject.Factory.CuisineFactory;
+import FinalProject.Factory.ItalianCuisineCreator;
+import FinalProject.Factory.KazakhCuisineCreator;
+import FinalProject.Factory.RussianCuisineCreator;
+import FinalProject.Observer.Customer;
+import FinalProject.Singleton.RestaurantManager;
+import FinalProject.Strategy.PayByKaspi;
+import FinalProject.Strategy.PayBySteam;
+
 import java.util.Scanner;
 
 public class Main {
@@ -52,12 +64,12 @@ public class Main {
                         System.out.println("Write customer's number:");
                         String number = scanner.next();
                         Customer customer = new Customer(name, number);
-                        restaurantManager.addCustomerWithNotifications(customer);
+                        restaurantManager.getNotificationManager().addObserver(customer);
                     }
                     else if (choice == 5) {
                         System.out.println("Write customer's id:");
                         int id = scanner.nextInt();
-                        restaurantManager.removeCustomerWithNotifications(id);
+                        restaurantManager.getNotificationManager().removeObserver(id);
                     }
                     else if (choice == 6) {
                         restaurantManager.showCustomersWithNotifications();
@@ -69,7 +81,7 @@ public class Main {
                         System.out.println("Write a message to customers:");
                         scanner.nextLine();
                         String message = scanner.nextLine();
-                        restaurantManager.notifyCustomers(message);
+                        restaurantManager.getNotificationManager().notifyObservers(message);
                     }
                     else  {
                         break;
@@ -88,7 +100,7 @@ public class Main {
                 System.out.println("Do you want to receive notifications? y/n.");
                 String choiceString = scanner.next();
                 if (choiceString.equals("y")) {
-                    restaurantManager.addCustomerWithNotifications(customer);
+                    restaurantManager.getNotificationManager().addObserver(customer);
                 }
 
                 //FACTORY AND DECORATOR.
